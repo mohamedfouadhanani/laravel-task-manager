@@ -15,7 +15,7 @@
         @method("PUT")
 
         <input type="text" name="name" placeholder="enter your name" value="{{ $name }}">
-        <input type="text" name="email" placeholder="enter your email" value="{{ $email }}">
+        <input type="text" name="email" placeholder="enter your email" readonly value="{{ $email }}">
 
         <input type="submit" value="update">
     </form>

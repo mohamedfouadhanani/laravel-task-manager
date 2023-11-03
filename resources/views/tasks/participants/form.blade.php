@@ -10,21 +10,22 @@
 @endphp
 
 @section('content')
-    <form action="{{ $form_route }}" method="post">
+<x-container class="p-4">
+    <x-form.form action="{{ $form_route }}" method="post" class="mb-4 w-full sm:w-1/2 mx-auto">
         @csrf
+        <x-input.section name="email" label="email">
+            <x-input.field type="email" name="email" placeholder="Enter the participants email" :value="$email" :errors="$errors" autocomplete="on" />
+        </x-input.section>
 
-        <input type="email" name="email" placeholder="enter the user's email" value="{{ $email }}">
-        @error('email')
-            <span>{{ $message }}</span>
-        @enderror
-
-        <select name="role">
-            @foreach ($roles as $role)
-                <option value="{{ $role }}">{{ $role }}</option>
-            @endforeach
-        </select>
-
-        <input type="submit" value="include">
-    </form>
-    <a href="{{ $back_route }}">back</a>
+        <x-input.section name="role" label="role">
+            <x-select name="role">
+                @foreach ($roles as $role)
+                    <option value="{{ $role }}">{{ $role }}</option>
+                @endforeach
+            </x-select>
+        </x-input.section>
+        
+        <x-form.action-section back_link="{{ $back_route }}" text="include" />
+    </x-form.form>
+</x-container>
 @endsection

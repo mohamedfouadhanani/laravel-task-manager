@@ -6,13 +6,18 @@
     $email = old("email");
 
     $forgot_password_route = route("password.request");
+    $back_link = route("login");
 @endphp
 
 @section('content')
-    <form action="{{ $forgot_password_route }}" method="post">
+<x-container class="p-4">
+    <x-form.form action="{{ $forgot_password_route }}" method="post" class="mb-4 w-full sm:w-1/2 mx-auto">
         @csrf
-        <input type="email" name="email" placeholder="enter your email" value={{ $email }}>
+        <x-input.section name="email" label="email">
+            <x-input.field type="email" name="email" placeholder="Enter your email" :value="$email" :errors="$errors" />
+        </x-input.section>
 
-        <input type="submit" value="send">
-    </form>
+        <x-form.action-section back_link="{{ $back_link }}" text="reset" />
+    </x-form.form>
+</x-container>
 @endsection

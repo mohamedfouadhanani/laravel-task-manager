@@ -4,31 +4,34 @@
 
 @php
     $form_route = route($task->exists ? 'tasks.update' : 'tasks.store', $task);
-    $back_route = route('tasks.index');
+    $back_route = route($task->exists ? 'tasks.show' : 'tasks.index', $task);
 
-    $task_title = $task->title;
-    $task_description = $task->description;
+    $title = old("name", $task->title);
+    $description = old("description", $task->description);
 @endphp
 
 @section('content')
-    <form action="{{ $form_route }}" method="post">
+<x-container class="p-4">
+    <x-form.form action="{{ $form_route }}" method="post" class="mb-4 w-full sm:w-1/2 mx-auto">
         @csrf
         @method($task->exists ? 'PUT' : 'POST')
+        <x-input.section name="title" label="title">
+            <x-input.field type="text" name="title" placeholder="Enter the tasks title" :value="$title" :errors="$errors" />
+        </x-input.section>
 
-        <input type="text" name="title" placeholder="enter the task's title" value="{{ $task_title }}">
-        @error('title')
-            <span>{{ $message }}</span>
-        @enderror
+        <x-input.section name="description" label="description">
+            <x-textarea name="description" placeholder="Enter the tasks description" :value="$description" :errors="$errors" />
+        </x-input.section>
 
-        <textarea name="description" placeholder="enter the task's description">{{ $task_description }}</textarea>
-
-        <select name="status">
-            @foreach ($statuses as $status)
-                <option value="{{ $status }}" @selected($task->exists && $task->status === $status)>{{ $status }}</option>
-            @endforeach
-        </select>
-
-        <input type="submit" value="{{ $task->exists ? 'Update' : 'Create' }}">
-    </form>
-    <a href="{{ $back_route }}">back</a>
+        <x-input.section name="status" label="status">
+            <x-select name="status">
+                @foreach ($statuses as $status)
+                    <option value="{{ $status }}" @selected($task->exists && $task->status === $status)>{{ $status }}</option>
+                @endforeach
+            </x-select>
+        </x-input.section>
+        
+        <x-form.action-section back_link="{{ $back_route }}" text="{{ $task->exists ? 'Update' : 'Create' }}" />
+    </x-form.form>
+</x-container>
 @endsection

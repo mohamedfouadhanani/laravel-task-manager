@@ -2,6 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CanDelete;
+use App\Http\Middleware\CanEdit;
+use App\Http\Middleware\CanView;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -64,5 +67,8 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'canView' => CanView::class,
+        'canEdit' => CanEdit::class,
+        'canDelete' => CanDelete::class,
     ];
 }

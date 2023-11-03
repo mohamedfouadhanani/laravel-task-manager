@@ -49,7 +49,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'role' => UserRole::class
     ];
     
-    public function tasks() {
-        return $this->belongsToMany(Task::class);
+    protected $appends = ['tasks'];
+    
+    public function getTasksAttribute() {
+        $permitted_user_roles = [UserRole::ADMINISTRATOR->value, UserRole::MODERATOR->value];
+        if (in_array($this->role->value, $permitted_user_roles)) {
+            return Task::all();
+        }
+        
+        return $this->belongsToMany(Task::class)->withPivot('role')->get();
     }
 }

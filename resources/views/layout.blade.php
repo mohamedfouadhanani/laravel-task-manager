@@ -12,6 +12,7 @@
 
     {{-- JS --}}
     @vite('resources/js/navbar.js')
+    @vite('resources/js/profile-dropdown.js')
 </head>
 <body>
     @include('partials.header.navbar')

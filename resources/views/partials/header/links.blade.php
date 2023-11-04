@@ -6,13 +6,11 @@
     $login_route = route('login');
 
     $tasks_route = route('tasks.index');
-    $profile_route = route('profile.index');
 @endphp
 
 <nav id="{{ $id }}" class="{{ $class }}">
     @auth
     <x-link href="{{ $tasks_route }}">tasks</x-link>
-    <x-link href="{{ $profile_route }}">profile</x-link>
     @endauth
     
     @guest
